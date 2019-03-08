@@ -1,5 +1,5 @@
 # bitTato
-<b><i>bitTato</i></b>is a digital potato trading platform build with Flask.
+<b><i>bitTato</i></b> is a digital potato trading platform build with Flask.
 
 
 ## First. Get the source code and install requirements.
