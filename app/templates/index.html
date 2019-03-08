@@ -1,0 +1,162 @@
+{% extends "base.html" %}
+{% block head %}
+{{ super() }}
+<title>bitTato Trading Co.</title>
+{% endblock %}
+{% block content %}
+
+<div class="container-fluid inner bittato">
+    <div class="row">
+        <div class="col-4"></div>
+        <div class="col-4 ">
+            <p class="bittato-navbar heading">
+                <img src="{{ url_for('static', filename='img/logo.png') }}" height="40"
+                     class="d-inline-block align-top" alt="">
+                <i>bitTato</i><span> Digital Potato Trading Co.</span>
+            </p></div>
+        <div class="col-4"></div>
+    </div>
+    <div class="row">
+        <div class="col-1"></div>
+        <div class="col-4 white box">
+            <div class="statistics">
+                <form action="/transaction" id="getStatusForm" method="POST">
+                    <div class="row form-header">
+                        <div class="col-12">
+                            <p>Add transaction</p>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-12 box-inner p-5">
+                            <div class="form-group row">
+                                <label for="inputPrice" class="col-sm-4 col-form-label required-mark">Storage
+                                    Fee</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" id="inputPrice"
+                                           placeholder="0.00" name="fee" required>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputVariety"
+                                       class="col-sm-4 col-form-label required-mark">Potato Variety</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id=inputVariety name="variety" required>
+                                        <option value="">Choose...</option>
+                                        {% for i in potatoes %}
+
+                                        <option style="height: 50px" value={{ i.product_id }}>{{i.variety_name}}</option>
+                                        {% endfor %}
+                                    </select>
+                                    <!--<input type="text" class="form-control required" id="inputVariety"-->
+                                    <!--placeholder="E.g. Ranger Russet" name="variety" required>-->
+                                </div>
+                            </div>
+                            <hr class="p-2">
+
+                            <div class="form-group row">
+                                <label for="inputQuantity" class="col-sm-4 col-form-label">Quantity</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" id="inputQuantity"
+                                           placeholder="e.g. 25 metric ton" name="quantity">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="inputMarketPrice" class="col-sm-4 col-form-label">Market Price</label>
+                                <div class="col-sm-8">
+                                    <input type="number" class="form-control" id="inputMarketPrice"
+                                           placeholder="In USD per 100 kg" name="market_price"  step="any">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="storageLocation"
+                                       class="col-sm-4 col-form-label">Location</label>
+                                <div class="col-sm-8">
+                                    <input type="text" class="form-control" id="StorageLocation"
+                                           placeholder="e.g. Alabama" name="location">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label for="dateInput" class="col-4 col-form-label">Transaction Date</label>
+                                <div class="col-sm-8">
+                                    <input class="form-control" type="date" placeholder="e.g. 08/12.2020" id="dateInput" name="tdate">
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <label for="inputMedium" class="col-sm-4 col-form-label">Medium</label>
+                                <div class="col-sm-8">
+                                    <select class="form-control" id="inputMedium" name="medium">
+                                        <option value="" selected>Choose...</option>
+                                        <option value="email">Email</option>
+                                        <option value="chat">Bloomberg Chat</option>
+                                        <option value="phone">Phone</option>
+                                        <option value="wom">Word-of-mouth</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-group row">
+                                <div class="col-sm-12  pt-2">
+                                    <button type="submit" class="btn common-button  float-right"
+                                            style="margin-right: 18px;">Submit
+                                    </button>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                    </div>
+                </form>
+
+            </div>
+        </div>
+        <div class="col-6 white box " style="margin-left: 5px">
+            <div class="row form-header">
+                <div class="col-12">
+                    <p>All Transactions</p>
+                </div>
+            </div>
+            <div style=" overflow:scroll; height:500px;">
+                <table class="table mt-4 bit-table">
+                    <thead>
+                    <tr>
+                        <!--<th class="w-10">ID</th>-->
+                        <th>Fee</th>
+                        <th>Variety</th>
+                        <th>Quantity</th>
+                        <th>Price</th>
+                        <th>Location</th>
+                        <th>Date</th>
+                        <th>Medium</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for t in transactions %}
+                    <tr class="task">
+                        <!--<td><i>{{ t.id }}</i></td>-->
+                        <td><i> {{ "${:,.2f}".format(t.fee | int) }}</i></td>
+                        <td><i> {{ t.variety }}</i></td>
+                        <td><i> {{ "{:,.2f}".format(t.quantity | int) or 'n/a' }} </i></td>
+                        <td><i> {{ "${:,.2f}".format(t.market_price | int) or 'n/a' }}</i></td>
+                        <td><i> {{ t.location or 'n/a' }}</i></td>
+                        {% if t.transaction_date %}
+                        <td><i> {{ t.transaction_date.date() or 'n/a' }}</i></td>
+                        {% else %}
+                        <td><i>  n/a </i></td>
+                        {% endif%}
+
+                        <td><i> {{ t.medium or 'n/a' }}</i></td>
+
+                    </tr>
+                    {% endfor %}
+                    </tbody>
+
+                </table>
+            </div>
+        </div>
+        <div class="col-1"></div>
+    </div>
+</div>
+{% endblock %}
