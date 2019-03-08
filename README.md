@@ -15,11 +15,6 @@ Install requirements:
  pip install -r requirements
 ```
 
-```console
-(ve) $ python run_task_processor.py
-```
-
-
 ## Viewing and adding transactions with Flask GUI
 
 from the <i>bittato</i> directory run the app with following command:
