@@ -32,3 +32,5 @@ http://localhost:5000/
 
 
 
+![Alt text](https://github.com/edrya/bittato/blob/master/screenshot.png?raw=true "App Screenshot")
+
