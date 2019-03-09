@@ -1,6 +1,7 @@
 # bitTato
 <b><i>bitTato</i></b> is a digital potato trading platform build with Flask. Check out [bitTato Diagram](https://github.com/edrya/bittato/blob/master/bitTatoDiagram.pdf) 
 
+Jupyter notebook with the initial data analysis can be viewed on [nbviewer](https://nbviewer.jupyter.org/github/edrya/bittato/blob/master/notebooks/bitTatoDataAnalysis.ipynb)
 
 ## First. Get the source code and install requirements.
 
